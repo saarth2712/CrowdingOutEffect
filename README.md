@@ -1,4 +1,4 @@
-# README: Crowding-Out Effect Analysis Using VAR Model in STATA
+# Crowding-Out Effect 
 
 ## Overview
 
