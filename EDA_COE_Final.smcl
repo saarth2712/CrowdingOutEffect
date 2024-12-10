@@ -1,0 +1,1373 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/saarth2712/Downloads/EDA_COE_Final.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}20 Jan 2024, 18:50:20
+
+{com}. 
+. import excel "/Users/saarth2712/Downloads/CrowdingOut (1).xlsx", firstrow sheet("Sheet1") cellrange(B1:D153)
+{res}{text}(3 vars, 152 obs)
+
+{com}. 
+. 
+. gen YQ = tq(1982q1) + _n-1
+
+. format YQ %tq
+
+. order YQ GE RIR PI
+
+. tsset YQ
+{res}
+{p 0 15 2}{txt:Time variable: }{res:YQ}{txt:, }{res:{bind:1982q1}}{txt: to }{res:{bind:2019q4}}{p_end}
+{txt}{col 9}Delta: {res}1 quarter
+
+{com}. 
+. local x = tq(2016q1) + 0.5
+
+. tsline GE, xline(`x') name(GE, replace)
+{res}
+{com}. tsline RIR, xline(`x') name(RIR, replace)
+{res}
+{com}. tsline PI, xline(`x') name(PI, replace)
+{res}
+{com}. graph combine GE RIR PI
+{res}
+{com}. 
+. dfuller GE
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:151}
+{txt}Variable: {res}GE{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}      2.900       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}1.0000{txt}.
+
+{com}. pperron GE
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:151}
+{txt}Variable: {res}GE{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}      0.965      -19.970      -13.802      -11.068
+{txt} Z(t)       {res}      2.588       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.9991{txt}.
+
+{com}. 
+. dfuller RIR
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:151}
+{txt}Variable: {res}RIR{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}     -2.782       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0608{txt}.
+
+{com}. pperron RIR
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:151}
+{txt}Variable: {res}RIR{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}     -8.733      -19.970      -13.802      -11.068
+{txt} Z(t)       {res}     -2.461       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.1253{txt}.
+
+{com}. 
+. dfuller PI
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:151}
+{txt}Variable: {res}PI{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}      1.223       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.9961{txt}.
+
+{com}. pperron PI
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:151}
+{txt}Variable: {res}PI{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}      0.627      -19.970      -13.802      -11.068
+{txt} Z(t)       {res}      0.559       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.9866{txt}.
+
+{com}. 
+. gen dGE = d.GE
+{txt}(1 missing value generated)
+
+{com}. gen dRIR = d.RIR
+{txt}(1 missing value generated)
+
+{com}. gen dPI = d.PI
+{txt}(1 missing value generated)
+
+{com}. 
+. tsline dGE, name(dGE, replace)
+{res}
+{com}. tsline dRIR, name(dRIR, replace)
+{res}
+{com}. tsline dPI, name(dPI, replace)
+{res}
+{com}. graph combine dGE dRIR dPI
+{res}
+{com}. 
+. dfuller dGE
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:150}
+{txt}Variable: {res}dGE{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}    -13.980       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. pperron dGE
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:150}
+{txt}Variable: {res}dGE{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}   -233.333      -19.967      -13.800      -11.067
+{txt} Z(t)       {res}    -14.072       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. 
+. dfuller dRIR
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:150}
+{txt}Variable: {res}dRIR{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}    -13.761       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. pperron dRIR
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:150}
+{txt}Variable: {res}dRIR{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}   -142.913      -19.967      -13.800      -11.067
+{txt} Z(t)       {res}    -14.335       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. 
+. dfuller dPI
+
+{txt}Dickey–Fuller test for unit root{col 43}Number of obs  = {res}{ralign 3:150}
+{txt}Variable: {res}dPI{txt}{col 43}Number of lags = {res}{ralign 3:0}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(t)       {res}     -7.760       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. pperron dPI
+
+{txt}Phillips–Perron test for unit root{col 42}Number of obs   = {res}{ralign 3:150}
+{txt}Variable: {res}dPI{txt}{col 42}Newey–West lags = {res}{ralign 3:4}
+
+{txt}H0: Random walk without drift, d = 0
+
+{col 40}Dickey–Fuller
+{col 20}Test{col 30}{hline 8} critical value {hline 9}
+              statistic           1%           5%          10%
+{hline 62}
+ Z(rho)     {res}    -91.802      -19.967      -13.800      -11.067
+{txt} Z(t)       {res}     -7.876       -3.493       -2.887       -2.577
+{txt}{hline 62}
+MacKinnon approximate {it:p}-value for Z(t) = {res}0.0000{txt}.
+
+{com}. 
+. varsoc dGE dRIR dPI if YQ < tq(2016q1), maxlag(8)
+
+{txt}Lag-order selection criteria
+
+{col 4}Sample: {res}1984q2 {txt}thru{res} 2015q4 {txt}{col 60}Number of obs = {res}127
+{col 3}{text}{c TLC}{hline 5}{c TT}{hline 9}{hline 8}{hline 1}{hline 5}{hline 6}{hline 8}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 1}{c TRC}
+{col 3}{text}{c |} Lag{col 9}{c |}    LL  {col 19}   LR  {col 28}  df{col 33}   p {col 39}   FPE {col 48}    AIC {col 58}   HQIC {col 68}   SBIC {col 79}{c |}
+{res}{col 3}{text}{c LT}{hline 5}{c +}{hline 9}{hline 8}{hline 1}{hline 5}{hline 6}{hline 8}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 1}{c RT}
+{col 3}{text}{c |}   0{col 9}{c |}{result}{space 1}-346.485{col 19}{col 28}{col 33}{col 39} .049295{col 48}{space 1}  5.5037{col 58}{space 1} 5.53099{col 68}{space 1} 5.57088{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   1{col 9}{c |}{result}{space 1}-315.861{col 19}{space 1} 61.246{col 28}   9{col 33} 0.000{col 39}  .03507{col 48}{space 1} 5.16317{col 58}{space 1} 5.27236{col 68}{space 1} 5.43191{col 77}{txt}*{res}{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 9}{c |}{result}{space 1}-296.726{col 19}{space 1} 38.272{col 28}   9{col 33} 0.000{col 39} .029905{col 48}{space 1} 5.00355{col 58}{space 1} 5.19463{col 68}{space 1} 5.47385{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 9}{c |}{result}{space 1} -281.91{col 19}{space 1} 29.631{col 28}   9{col 33} 0.001{col 39} .027305{col 48}{space 1} 4.91197{col 58}{space 1} 5.18493{col 67}{txt}*{res}{col 68}{space 1} 5.58382{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 9}{c |}{result}{space 1}    -274{col 19}{space 1} 15.819{col 28}   9{col 33} 0.071{col 39} .027811{col 48}{space 1} 4.92914{col 58}{space 1}   5.284{col 68}{space 1} 5.80255{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   5{col 9}{c |}{result}{space 1} -264.51{col 19}{space 1} 18.981{col 28}   9{col 33} 0.025{col 39} .027649{col 48}{space 1} 4.92142{col 58}{space 1} 5.35816{col 68}{space 1} 5.99638{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   6{col 9}{c |}{result}{space 1}-253.275{col 19}{space 1}  22.47{col 27}{txt}*{res}{col 28}   9{col 33} 0.008{col 39} .026766{col 47}{txt}*{res}{col 48}{space 1} 4.88622{col 57}{txt}*{res}{col 58}{space 1} 5.40486{col 68}{space 1} 6.16275{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   7{col 9}{c |}{result}{space 1}-250.819{col 19}{space 1} 4.9117{col 28}   9{col 33} 0.842{col 39} .029785{col 48}{space 1} 4.98928{col 58}{space 1} 5.58981{col 68}{space 1} 6.46736{col 79}{text}{c |}
+{res}{col 3}{text}{c |}   8{col 9}{c |}{result}{space 1}-248.623{col 19}{space 1} 4.3927{col 28}   9{col 33} 0.884{col 39}  .03332{col 48}{space 1} 5.09642{col 58}{space 1} 5.77884{col 68}{space 1} 6.77606{col 79}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 5}{c BT}{hline 9}{hline 8}{hline 1}{hline 5}{hline 6}{hline 8}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 9}{hline 1}{hline 1}{c BRC}
+{res}{txt}{space 3}* optimal lag
+{space 3}Endogenous: {res}dGE dRIR dPI
+{txt}{space 3} Exogenous: {res}_cons
+
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1982q3 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       134
+{txt}Log likelihood =  {res}-334.4066{txt}{col 38}{col 49}AIC{col 67}=  {res} 5.170248
+{txt}FPE{col 16}=  {res} .0353192{txt}{col 49}HQIC{col 67}=  {res} 5.275704
+{txt}Det(Sigma_ml){col 16}=  {res} .0295259{txt}{col 49}SBIC{col 67}=  {res} 5.429757
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}     4{col 26}{space 2} .480923{col 37}{space 1} 0.1597{col 47} 25.46665{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}     4{col 26}{space 2}  .71404{col 37}{space 1} 0.1036{col 47} 15.47937{col 58} 0.0014
+{col 1}{text}dPI             {col 18}{result}     4{col 26}{space 2} .529534{col 37}{space 1} 0.2113{col 47} 35.90439{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2926354{col 26}{space 2} .0810819{col 37}{space 1}   -3.61{col 46}{space 3}0.000{col 54}{space 4}-.4515531{col 67}{space 3}-.1337177
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0126326{col 26}{space 2} .0535866{col 37}{space 1}    0.24{col 46}{space 3}0.814{col 54}{space 4}-.0923952{col 67}{space 3} .1176604
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.3026859{col 26}{space 2} .0719129{col 37}{space 1}   -4.21{col 46}{space 3}0.000{col 54}{space 4}-.4436326{col 67}{space 3}-.1617392
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .5539068{col 26}{space 2} .0552861{col 37}{space 1}   10.02{col 46}{space 3}0.000{col 54}{space 4} .4455481{col 67}{space 3} .6622656
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2086772{col 26}{space 2} .1203847{col 37}{space 1}   -1.73{col 46}{space 3}0.083{col 54}{space 4}-.4446269{col 67}{space 3} .0272724
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1687955{col 26}{space 2} .0795615{col 37}{space 1}   -2.12{col 46}{space 3}0.034{col 54}{space 4}-.3247332{col 67}{space 3}-.0128577
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}  .275065{col 26}{space 2} .1067712{col 37}{space 1}    2.58{col 46}{space 3}0.010{col 54}{space 4} .0657973{col 67}{space 3} .4843326
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.0556578{col 26}{space 2} .0820849{col 37}{space 1}   -0.68{col 46}{space 3}0.498{col 54}{space 4}-.2165412{col 67}{space 3} .1052255
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1207438{col 26}{space 2} .0892777{col 37}{space 1}   -1.35{col 46}{space 3}0.176{col 54}{space 4}-.2957249{col 67}{space 3} .0542373
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0846775{col 26}{space 2} .0590031{col 37}{space 1}   -1.44{col 46}{space 3}0.151{col 54}{space 4}-.2003215{col 67}{space 3} .0309664
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .4240697{col 26}{space 2} .0791819{col 37}{space 1}    5.36{col 46}{space 3}0.000{col 54}{space 4} .2688761{col 67}{space 3} .5792634
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .1554508{col 26}{space 2} .0608744{col 37}{space 1}    2.55{col 46}{space 3}0.011{col 54}{space 4} .0361391{col 67}{space 3} .2747625
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1}   .422142{col 30}{text}{c |}{result}{space 2} .422142{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.3551031{col 30}{text}{c |}{result}{space 2} .355103{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.1044001{col 30}{text}{c |}{result}{space 2}   .1044{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2} 31.9882{col 23}   9{col 29}{space 3}0.00020{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2} 39.6156{col 23}   9{col 29}{space 3}0.00001{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2} 24.5375{col 23}   9{col 29}{space 3}0.00353{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2} 20.7875{col 23}   9{col 29}{space 3}0.01363{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1/2)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1982q4 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       133
+{txt}Log likelihood =  {res}-306.3422{txt}{col 38}{col 49}AIC{col 67}=  {res} 4.922439
+{txt}FPE{col 16}=  {res} .0275735{txt}{col 49}HQIC{col 67}=  {res}  5.10789
+{txt}Det(Sigma_ml){col 16}=  {res} .0201011{txt}{col 49}SBIC{col 67}=  {res}  5.37881
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}     7{col 26}{space 2} .470961{col 37}{space 1} 0.2189{col 47} 37.27984{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}     7{col 26}{space 2} .626497{col 37}{space 1} 0.2357{col 47} 41.00647{col 58} 0.0000
+{col 1}{text}dPI             {col 18}{result}     7{col 26}{space 2} .527918{col 37}{space 1} 0.2395{col 47} 41.89379{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} -.205516{col 26}{space 2} .0845384{col 37}{space 1}   -2.43{col 46}{space 3}0.015{col 54}{space 4}-.3712083{col 67}{space 3}-.0398237
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .2571829{col 26}{space 2} .0861781{col 37}{space 1}    2.98{col 46}{space 3}0.003{col 54}{space 4}  .088277{col 67}{space 3} .4260888
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0440705{col 26}{space 2} .0567508{col 37}{space 1}    0.78{col 46}{space 3}0.437{col 54}{space 4} -.067159{col 67}{space 3} .1553001
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .0448458{col 26}{space 2} .0531664{col 37}{space 1}    0.84{col 46}{space 3}0.399{col 54}{space 4}-.0593585{col 67}{space 3} .1490501
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2829607{col 26}{space 2} .0768275{col 37}{space 1}   -3.68{col 46}{space 3}0.000{col 54}{space 4}-.4335398{col 67}{space 3}-.1323815
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .0840685{col 26}{space 2} .0812852{col 37}{space 1}    1.03{col 46}{space 3}0.301{col 54}{space 4}-.0752476{col 67}{space 3} .2433846
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .4098571{col 26}{space 2} .0734199{col 37}{space 1}    5.58{col 46}{space 3}0.000{col 54}{space 4} .2659567{col 67}{space 3} .5537576
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0710256{col 26}{space 2} .1124573{col 37}{space 1}   -0.63{col 46}{space 3}0.528{col 54}{space 4}-.2914379{col 67}{space 3} .1493867
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3165557{col 26}{space 2} .1146385{col 37}{space 1}    2.76{col 46}{space 3}0.006{col 54}{space 4} .0918684{col 67}{space 3} .5412429
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1296755{col 26}{space 2} .0754928{col 37}{space 1}   -1.72{col 46}{space 3}0.086{col 54}{space 4}-.2776387{col 67}{space 3} .0182877
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.2514714{col 26}{space 2} .0707247{col 37}{space 1}   -3.56{col 46}{space 3}0.000{col 54}{space 4}-.3900893{col 67}{space 3}-.1128535
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .1602162{col 26}{space 2} .1021999{col 37}{space 1}    1.57{col 46}{space 3}0.117{col 54}{space 4}-.0400919{col 67}{space 3} .3605243
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3565874{col 26}{space 2} .1081298{col 37}{space 1}    3.30{col 46}{space 3}0.001{col 54}{space 4}  .144657{col 67}{space 3} .5685178
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.2659323{col 26}{space 2} .0976669{col 37}{space 1}   -2.72{col 46}{space 3}0.006{col 54}{space 4} -.457356{col 67}{space 3}-.0745086
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1060786{col 26}{space 2} .0947622{col 37}{space 1}   -1.12{col 46}{space 3}0.263{col 54}{space 4}-.2918091{col 67}{space 3} .0796519
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0638404{col 26}{space 2} .0966001{col 37}{space 1}   -0.66{col 46}{space 3}0.509{col 54}{space 4}-.2531732{col 67}{space 3} .1254923
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1296022{col 26}{space 2} .0636141{col 37}{space 1}   -2.04{col 46}{space 3}0.042{col 54}{space 4}-.2542834{col 67}{space 3}-.0049209
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0865412{col 26}{space 2} .0595962{col 37}{space 1}   -1.45{col 46}{space 3}0.146{col 54}{space 4}-.2033477{col 67}{space 3} .0302652
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .3496624{col 26}{space 2} .0861188{col 37}{space 1}    4.06{col 46}{space 3}0.000{col 54}{space 4} .1808727{col 67}{space 3} .5184521
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1529435{col 26}{space 2} .0911156{col 37}{space 1}    1.68{col 46}{space 3}0.093{col 54}{space 4}-.0256397{col 67}{space 3} .3315268
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .1491913{col 26}{space 2} .0822991{col 37}{space 1}    1.81{col 46}{space 3}0.070{col 54}{space 4} -.012112{col 67}{space 3} .3104945
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1} -.6305793{col 30}{text}{c |}{result}{space 2} .630579{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4889405{col 16}+ .03977539{it:i}{col 30}{text}{c |}{result}{space 2} .490556{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4889405{col 16}- .03977539{it:i}{col 30}{text}{c |}{result}{space 2} .490556{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.03364286{col 16}+  .4661009{it:i}{col 30}{text}{c |}{result}{space 2} .467314{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.03364286{col 16}-  .4661009{it:i}{col 30}{text}{c |}{result}{space 2} .467314{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.2655452{col 30}{text}{c |}{result}{space 2} .265545{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2} 23.0044{col 23}   9{col 29}{space 3}0.00619{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2} 22.5785{col 23}   9{col 29}{space 3}0.00722{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2} 24.9968{col 23}   9{col 29}{space 3}0.00297{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2} 16.8015{col 23}   9{col 29}{space 3}0.05192{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1/3)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1983q1 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       132
+{txt}Log likelihood =  {res}-288.5139{txt}{col 38}{col 49}AIC{col 67}=  {res} 4.825969
+{txt}FPE{col 16}=  {res} .0250523{txt}{col 49}HQIC{col 67}=  {res} 5.092205
+{txt}Det(Sigma_ml){col 16}=  {res} .0158877{txt}{col 49}SBIC{col 67}=  {res} 5.481151
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}    10{col 26}{space 2} .464718{col 37}{space 1} 0.2636{col 47} 47.26047{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}    10{col 26}{space 2} .609685{col 37}{space 1} 0.2987{col 47}  56.2344{col 58} 0.0000
+{col 1}{text}dPI             {col 18}{result}    10{col 26}{space 2} .504067{col 37}{space 1} 0.3227{col 47} 62.88444{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2406787{col 26}{space 2} .0855979{col 37}{space 1}   -2.81{col 46}{space 3}0.005{col 54}{space 4}-.4084475{col 67}{space 3}-.0729098
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .2846264{col 26}{space 2} .0868259{col 37}{space 1}    3.28{col 46}{space 3}0.001{col 54}{space 4} .1144508{col 67}{space 3}  .454802
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .1998902{col 26}{space 2} .0901585{col 37}{space 1}    2.22{col 46}{space 3}0.027{col 54}{space 4} .0231827{col 67}{space 3} .3765976
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0077391{col 26}{space 2} .0639562{col 37}{space 1}   -0.12{col 46}{space 3}0.904{col 54}{space 4}-.1330909{col 67}{space 3} .1176128
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .0531882{col 26}{space 2} .0574085{col 37}{space 1}    0.93{col 46}{space 3}0.354{col 54}{space 4}-.0593304{col 67}{space 3} .1657068
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0866237{col 26}{space 2} .0566142{col 37}{space 1}   -1.53{col 46}{space 3}0.126{col 54}{space 4}-.1975854{col 67}{space 3}  .024338
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2879234{col 26}{space 2} .0766499{col 37}{space 1}   -3.76{col 46}{space 3}0.000{col 54}{space 4}-.4381545{col 67}{space 3}-.1376923
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1167544{col 26}{space 2} .0827957{col 37}{space 1}    1.41{col 46}{space 3}0.158{col 54}{space 4}-.0455222{col 67}{space 3}  .279031
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0079745{col 26}{space 2} .0841551{col 37}{space 1}    0.09{col 46}{space 3}0.925{col 54}{space 4}-.1569665{col 67}{space 3} .1729155
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .3250024{col 26}{space 2} .0824652{col 37}{space 1}    3.94{col 46}{space 3}0.000{col 54}{space 4} .1633735{col 67}{space 3} .4866312
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1388605{col 26}{space 2} .1122999{col 37}{space 1}   -1.24{col 46}{space 3}0.216{col 54}{space 4}-.3589643{col 67}{space 3} .0812433
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}  .403818{col 26}{space 2} .1139109{col 37}{space 1}    3.55{col 46}{space 3}0.000{col 54}{space 4} .1805567{col 67}{space 3} .6270793
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2818199{col 26}{space 2} .1182832{col 37}{space 1}    2.38{col 46}{space 3}0.017{col 54}{space 4} .0499892{col 67}{space 3} .5136507
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2352057{col 26}{space 2} .0839071{col 37}{space 1}   -2.80{col 46}{space 3}0.005{col 54}{space 4}-.3996606{col 67}{space 3}-.0707508
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} -.294924{col 26}{space 2} .0753169{col 37}{space 1}   -3.92{col 46}{space 3}0.000{col 54}{space 4}-.4425424{col 67}{space 3}-.1473056
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.1399585{col 26}{space 2} .0742748{col 37}{space 1}   -1.88{col 46}{space 3}0.060{col 54}{space 4}-.2855344{col 67}{space 3} .0056174
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}  .110526{col 26}{space 2} .1005606{col 37}{space 1}    1.10{col 46}{space 3}0.272{col 54}{space 4}-.0865691{col 67}{space 3} .3076212
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3232281{col 26}{space 2} .1086235{col 37}{space 1}    2.98{col 46}{space 3}0.003{col 54}{space 4} .1103299{col 67}{space 3} .5361263
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2853646{col 26}{space 2}  .110407{col 37}{space 1}    2.58{col 46}{space 3}0.010{col 54}{space 4} .0689708{col 67}{space 3} .5017583
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.4352522{col 26}{space 2} .1081899{col 37}{space 1}   -4.02{col 46}{space 3}0.000{col 54}{space 4}-.6473006{col 67}{space 3}-.2232038
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0204328{col 26}{space 2} .0928458{col 37}{space 1}   -0.22{col 46}{space 3}0.826{col 54}{space 4}-.2024073{col 67}{space 3} .1615417
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.1400464{col 26}{space 2} .0941778{col 37}{space 1}   -1.49{col 46}{space 3}0.137{col 54}{space 4}-.3246314{col 67}{space 3} .0445387
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.3740643{col 26}{space 2} .0977926{col 37}{space 1}   -3.83{col 46}{space 3}0.000{col 54}{space 4}-.5657343{col 67}{space 3}-.1823943
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} -.102641{col 26}{space 2} .0693716{col 37}{space 1}   -1.48{col 46}{space 3}0.139{col 54}{space 4}-.2386069{col 67}{space 3} .0333249
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0998328{col 26}{space 2} .0622695{col 37}{space 1}   -1.60{col 46}{space 3}0.109{col 54}{space 4}-.2218789{col 67}{space 3} .0222132
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0079443{col 26}{space 2} .0614079{col 37}{space 1}    0.13{col 46}{space 3}0.897{col 54}{space 4} -.112413{col 67}{space 3} .1283016
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .3437174{col 26}{space 2} .0831402{col 37}{space 1}    4.13{col 46}{space 3}0.000{col 54}{space 4} .1807656{col 67}{space 3} .5066691
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1236856{col 26}{space 2} .0898063{col 37}{space 1}    1.38{col 46}{space 3}0.168{col 54}{space 4}-.0523316{col 67}{space 3} .2997028
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0664366{col 26}{space 2} .0912809{col 37}{space 1}   -0.73{col 46}{space 3}0.467{col 54}{space 4}-.2453438{col 67}{space 3} .1124706
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .3132112{col 26}{space 2} .0894479{col 37}{space 1}    3.50{col 46}{space 3}0.000{col 54}{space 4} .1378967{col 67}{space 3} .4885258
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1}  .7626759{col 30}{text}{c |}{result}{space 2} .762676{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.6153137{col 16}+ .04766592{it:i}{col 30}{text}{c |}{result}{space 2} .617157{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.6153137{col 16}- .04766592{it:i}{col 30}{text}{c |}{result}{space 2} .617157{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} .00038366{col 16}+  .6018552{it:i}{col 30}{text}{c |}{result}{space 2} .601855{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} .00038366{col 16}-  .6018552{it:i}{col 30}{text}{c |}{result}{space 2} .601855{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4255516{col 16}+  .3676824{it:i}{col 30}{text}{c |}{result}{space 2} .562392{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4255516{col 16}-  .3676824{it:i}{col 30}{text}{c |}{result}{space 2} .562392{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.2580431{col 16}+  .4390225{it:i}{col 30}{text}{c |}{result}{space 2} .509242{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.2580431{col 16}-  .4390225{it:i}{col 30}{text}{c |}{result}{space 2} .509242{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2} 15.7130{col 23}   9{col 29}{space 3}0.07312{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2} 22.4438{col 23}   9{col 29}{space 3}0.00757{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2} 11.2431{col 23}   9{col 29}{space 3}0.25941{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2} 18.1913{col 23}   9{col 29}{space 3}0.03302{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1/4)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1983q2 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       131
+{txt}Log likelihood =  {res} -278.719{txt}{col 38}{col 49}AIC{col 67}=  {res} 4.850671
+{txt}FPE{col 16}=  {res}  .025707{txt}{col 49}HQIC{col 67}=  {res} 5.198492
+{txt}Det(Sigma_ml){col 16}=  {res} .0141452{txt}{col 49}SBIC{col 67}=  {res} 5.706646
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}    13{col 26}{space 2} .459991{col 37}{space 1} 0.3018{col 47} 56.61832{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}    13{col 26}{space 2} .606324{col 37}{space 1} 0.3286{col 47} 64.10902{col 58} 0.0000
+{col 1}{text}dPI             {col 18}{result}    13{col 26}{space 2} .501293{col 37}{space 1} 0.3520{col 47} 71.17481{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2938202{col 26}{space 2} .0866795{col 37}{space 1}   -3.39{col 46}{space 3}0.001{col 54}{space 4}-.4637089{col 67}{space 3}-.1239315
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .2151666{col 26}{space 2} .0894548{col 37}{space 1}    2.41{col 46}{space 3}0.016{col 54}{space 4} .0398385{col 67}{space 3} .3904947
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2713969{col 26}{space 2} .0947397{col 37}{space 1}    2.86{col 46}{space 3}0.004{col 54}{space 4} .0857105{col 67}{space 3} .4570834
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .2469868{col 26}{space 2} .0978038{col 37}{space 1}    2.53{col 46}{space 3}0.012{col 54}{space 4} .0552949{col 67}{space 3} .4386787
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0425441{col 26}{space 2}  .065583{col 37}{space 1}   -0.65{col 46}{space 3}0.517{col 54}{space 4}-.1710845{col 67}{space 3} .0859962
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .0270226{col 26}{space 2}  .064973{col 37}{space 1}    0.42{col 46}{space 3}0.677{col 54}{space 4}-.1003222{col 67}{space 3} .1543674
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0546888{col 26}{space 2} .0618954{col 37}{space 1}   -0.88{col 46}{space 3}0.377{col 54}{space 4}-.1760016{col 67}{space 3} .0666239
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.0391473{col 26}{space 2} .0584271{col 37}{space 1}   -0.67{col 46}{space 3}0.503{col 54}{space 4}-.1536623{col 67}{space 3} .0753678
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2218027{col 26}{space 2} .0795199{col 37}{space 1}   -2.79{col 46}{space 3}0.005{col 54}{space 4}-.3776588{col 67}{space 3}-.0659466
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .0916439{col 26}{space 2} .0829872{col 37}{space 1}    1.10{col 46}{space 3}0.269{col 54}{space 4} -.071008{col 67}{space 3} .2542958
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0470984{col 26}{space 2} .0851185{col 37}{space 1}    0.55{col 46}{space 3}0.580{col 54}{space 4}-.1197307{col 67}{space 3} .2139276
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} -.003154{col 26}{space 2}  .084797{col 37}{space 1}   -0.04{col 46}{space 3}0.970{col 54}{space 4}-.1693531{col 67}{space 3} .1630451
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .2303933{col 26}{space 2} .0930591{col 37}{space 1}    2.48{col 46}{space 3}0.013{col 54}{space 4} .0480008{col 67}{space 3} .4127857
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1103654{col 26}{space 2} .1142543{col 37}{space 1}   -0.97{col 46}{space 3}0.334{col 54}{space 4}-.3342996{col 67}{space 3} .1135688
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .4720633{col 26}{space 2} .1179124{col 37}{space 1}    4.00{col 46}{space 3}0.000{col 54}{space 4} .2409593{col 67}{space 3} .7031673
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .1841586{col 26}{space 2} .1248786{col 37}{space 1}    1.47{col 46}{space 3}0.140{col 54}{space 4}-.0605989{col 67}{space 3} .4289162
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.2494571{col 26}{space 2} .1289174{col 37}{space 1}   -1.94{col 46}{space 3}0.053{col 54}{space 4}-.5021305{col 67}{space 3} .0032163
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1920815{col 26}{space 2} .0864465{col 37}{space 1}   -2.22{col 46}{space 3}0.026{col 54}{space 4}-.3615135{col 67}{space 3}-.0226494
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.2828086{col 26}{space 2} .0856425{col 37}{space 1}   -3.30{col 46}{space 3}0.001{col 54}{space 4}-.4506647{col 67}{space 3}-.1149524
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.1283496{col 26}{space 2} .0815857{col 37}{space 1}   -1.57{col 46}{space 3}0.116{col 54}{space 4}-.2882548{col 67}{space 3} .0315555
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}  .001625{col 26}{space 2} .0770141{col 37}{space 1}    0.02{col 46}{space 3}0.983{col 54}{space 4}-.1493199{col 67}{space 3} .1525699
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0343983{col 26}{space 2}  .104817{col 37}{space 1}    0.33{col 46}{space 3}0.743{col 54}{space 4}-.1710392{col 67}{space 3} .2398358
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3592272{col 26}{space 2} .1093873{col 37}{space 1}    3.28{col 46}{space 3}0.001{col 54}{space 4}  .144832{col 67}{space 3} .5736225
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2883909{col 26}{space 2} .1121966{col 37}{space 1}    2.57{col 46}{space 3}0.010{col 54}{space 4} .0684895{col 67}{space 3} .5082922
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.1345528{col 26}{space 2} .1117729{col 37}{space 1}   -1.20{col 46}{space 3}0.229{col 54}{space 4}-.3536236{col 67}{space 3} .0845181
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.2973412{col 26}{space 2} .1226633{col 37}{space 1}   -2.42{col 46}{space 3}0.015{col 54}{space 4}-.5377569{col 67}{space 3}-.0569255
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0044884{col 26}{space 2} .0944625{col 37}{space 1}    0.05{col 46}{space 3}0.962{col 54}{space 4}-.1806547{col 67}{space 3} .1896315
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.1144276{col 26}{space 2} .0974869{col 37}{space 1}   -1.17{col 46}{space 3}0.240{col 54}{space 4}-.3054984{col 67}{space 3} .0766433
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} -.441179{col 26}{space 2} .1032464{col 37}{space 1}   -4.27{col 46}{space 3}0.000{col 54}{space 4}-.6435383{col 67}{space 3}-.2388197
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.0699904{col 26}{space 2} .1065856{col 37}{space 1}   -0.66{col 46}{space 3}0.511{col 54}{space 4}-.2788943{col 67}{space 3} .1389136
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0577578{col 26}{space 2} .0714718{col 37}{space 1}   -0.81{col 46}{space 3}0.419{col 54}{space 4}-.1978398{col 67}{space 3} .0823243
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0460842{col 26}{space 2}  .070807{col 37}{space 1}   -0.65{col 46}{space 3}0.515{col 54}{space 4}-.1848634{col 67}{space 3} .0926949
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}  .063532{col 26}{space 2}  .067453{col 37}{space 1}    0.94{col 46}{space 3}0.346{col 54}{space 4}-.0686734{col 67}{space 3} .1957375
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .1151424{col 26}{space 2} .0636733{col 37}{space 1}    1.81{col 46}{space 3}0.071{col 54}{space 4}-.0096549{col 67}{space 3} .2399398
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .3259187{col 26}{space 2}   .08666{col 37}{space 1}    3.76{col 46}{space 3}0.000{col 54}{space 4} .1560682{col 67}{space 3} .4957692
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1699297{col 26}{space 2} .0904387{col 37}{space 1}    1.88{col 46}{space 3}0.060{col 54}{space 4}-.0073268{col 67}{space 3} .3471862
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0467192{col 26}{space 2} .0927613{col 37}{space 1}   -0.50{col 46}{space 3}0.615{col 54}{space 4} -.228528{col 67}{space 3} .1350897
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.1832545{col 26}{space 2}  .092411{col 37}{space 1}   -1.98{col 46}{space 3}0.047{col 54}{space 4}-.3643767{col 67}{space 3}-.0021323
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .3884986{col 26}{space 2} .1014149{col 37}{space 1}    3.83{col 46}{space 3}0.000{col 54}{space 4}  .189729{col 67}{space 3} .5872681
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1}  .8531413{col 30}{text}{c |}{result}{space 2} .853141{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.7404095{col 30}{text}{c |}{result}{space 2}  .74041{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.1050776{col 16}+  .7111887{it:i}{col 30}{text}{c |}{result}{space 2} .718909{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.1050776{col 16}-  .7111887{it:i}{col 30}{text}{c |}{result}{space 2} .718909{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.3198797{col 16}+  .5549439{it:i}{col 30}{text}{c |}{result}{space 2} .640536{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.3198797{col 16}-  .5549439{it:i}{col 30}{text}{c |}{result}{space 2} .640536{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .3801213{col 16}+  .4752979{it:i}{col 30}{text}{c |}{result}{space 2} .608605{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .3801213{col 16}-  .4752979{it:i}{col 30}{text}{c |}{result}{space 2} .608605{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.5473021{col 16}+   .200676{it:i}{col 30}{text}{c |}{result}{space 2} .582933{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.5473021{col 16}-   .200676{it:i}{col 30}{text}{c |}{result}{space 2} .582933{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4557807{col 16}+   .323271{it:i}{col 30}{text}{c |}{result}{space 2} .558785{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4557807{col 16}-   .323271{it:i}{col 30}{text}{c |}{result}{space 2} .558785{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2} 14.1859{col 23}   9{col 29}{space 3}0.11586{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2} 12.2421{col 23}   9{col 29}{space 3}0.20000{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2}  7.9500{col 23}   9{col 29}{space 3}0.53920{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2}  9.2581{col 23}   9{col 29}{space 3}0.41379{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1/5)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1983q3 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       130
+{txt}Log likelihood =  {res}-267.3346{txt}{col 38}{col 49}AIC{col 67}=  {res} 4.851302
+{txt}FPE{col 16}=  {res} .0257694{txt}{col 49}HQIC{col 67}=  {res}  5.28152
+{txt}Det(Sigma_ml){col 16}=  {res} .0122676{txt}{col 49}SBIC{col 67}=  {res} 5.910084
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}    16{col 26}{space 2} .440362{col 37}{space 1} 0.3804{col 47} 79.81226{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}    16{col 26}{space 2} .605964{col 37}{space 1} 0.3492{col 47}  69.7556{col 58} 0.0000
+{col 1}{text}dPI             {col 18}{result}    16{col 26}{space 2}  .50778{col 37}{space 1} 0.3566{col 47} 72.06035{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.3420873{col 26}{space 2} .0835845{col 37}{space 1}   -4.09{col 46}{space 3}0.000{col 54}{space 4}-.5059099{col 67}{space 3}-.1782647
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1727904{col 26}{space 2} .0878105{col 37}{space 1}    1.97{col 46}{space 3}0.049{col 54}{space 4} .0006849{col 67}{space 3} .3448958
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .1506457{col 26}{space 2} .0943143{col 37}{space 1}    1.60{col 46}{space 3}0.110{col 54}{space 4}-.0342069{col 67}{space 3} .3354983
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .3358084{col 26}{space 2} .0998746{col 37}{space 1}    3.36{col 46}{space 3}0.001{col 54}{space 4} .1400578{col 67}{space 3}  .531559
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .3751625{col 26}{space 2} .0969269{col 37}{space 1}    3.87{col 46}{space 3}0.000{col 54}{space 4} .1851893{col 67}{space 3} .5651357
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0010749{col 26}{space 2} .0632667{col 37}{space 1}   -0.02{col 46}{space 3}0.986{col 54}{space 4}-.1250753{col 67}{space 3} .1229254
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0154923{col 26}{space 2} .0635452{col 37}{space 1}   -0.24{col 46}{space 3}0.807{col 54}{space 4}-.1400386{col 67}{space 3} .1090539
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.1172393{col 26}{space 2} .0669032{col 37}{space 1}   -1.75{col 46}{space 3}0.080{col 54}{space 4}-.2483671{col 67}{space 3} .0138885
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .0215757{col 26}{space 2} .0626203{col 37}{space 1}    0.34{col 46}{space 3}0.730{col 54}{space 4}-.1011577{col 67}{space 3} .1443092
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0271711{col 26}{space 2} .0561836{col 37}{space 1}    0.48{col 46}{space 3}0.629{col 54}{space 4}-.0829467{col 67}{space 3} .1372889
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2262927{col 26}{space 2} .0771258{col 37}{space 1}   -2.93{col 46}{space 3}0.003{col 54}{space 4}-.3774564{col 67}{space 3}-.0751289
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1557702{col 26}{space 2} .0809935{col 37}{space 1}    1.92{col 46}{space 3}0.054{col 54}{space 4}-.0029742{col 67}{space 3} .3145146
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0118556{col 26}{space 2}  .083265{col 37}{space 1}    0.14{col 46}{space 3}0.887{col 54}{space 4}-.1513408{col 67}{space 3}  .175052
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}  .016451{col 26}{space 2} .0831359{col 37}{space 1}    0.20{col 46}{space 3}0.843{col 54}{space 4}-.1464924{col 67}{space 3} .1793944
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .1025748{col 26}{space 2} .0818346{col 37}{space 1}    1.25{col 46}{space 3}0.210{col 54}{space 4} -.057818{col 67}{space 3} .2629676
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .1119882{col 26}{space 2}  .096595{col 37}{space 1}    1.16{col 46}{space 3}0.246{col 54}{space 4}-.0773345{col 67}{space 3} .3013108
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0835561{col 26}{space 2} .1150173{col 37}{space 1}   -0.73{col 46}{space 3}0.468{col 54}{space 4}-.3089858{col 67}{space 3} .1418736
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .5333208{col 26}{space 2} .1208325{col 37}{space 1}    4.41{col 46}{space 3}0.000{col 54}{space 4} .2964934{col 67}{space 3} .7701482
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2024893{col 26}{space 2} .1297821{col 37}{space 1}    1.56{col 46}{space 3}0.119{col 54}{space 4}-.0518789{col 67}{space 3} .4568575
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.2936916{col 26}{space 2} .1374334{col 37}{space 1}   -2.14{col 46}{space 3}0.033{col 54}{space 4}-.5630562{col 67}{space 3}-.0243271
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2}-.0848261{col 26}{space 2} .1333772{col 37}{space 1}   -0.64{col 46}{space 3}0.525{col 54}{space 4}-.3462406{col 67}{space 3} .1765883
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1876795{col 26}{space 2} .0870587{col 37}{space 1}   -2.16{col 46}{space 3}0.031{col 54}{space 4}-.3583114{col 67}{space 3}-.0170475
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}  -.25363{col 26}{space 2}  .087442{col 37}{space 1}   -2.90{col 46}{space 3}0.004{col 54}{space 4}-.4250132{col 67}{space 3}-.0822469
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0795327{col 26}{space 2} .0920628{col 37}{space 1}   -0.86{col 46}{space 3}0.388{col 54}{space 4}-.2599724{col 67}{space 3}  .100907
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.0057301{col 26}{space 2} .0861692{col 37}{space 1}   -0.07{col 46}{space 3}0.947{col 54}{space 4}-.1746186{col 67}{space 3} .1631585
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .1396886{col 26}{space 2} .0773119{col 37}{space 1}    1.81{col 46}{space 3}0.071{col 54}{space 4}  -.01184{col 67}{space 3} .2912172
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0211202{col 26}{space 2} .1061297{col 37}{space 1}    0.20{col 46}{space 3}0.842{col 54}{space 4}-.1868902{col 67}{space 3} .2291306
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3543398{col 26}{space 2} .1114519{col 37}{space 1}    3.18{col 46}{space 3}0.001{col 54}{space 4}  .135898{col 67}{space 3} .5727816
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .3123695{col 26}{space 2} .1145776{col 37}{space 1}    2.73{col 46}{space 3}0.006{col 54}{space 4} .0878014{col 67}{space 3} .5369375
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.1796995{col 26}{space 2}    .1144{col 37}{space 1}   -1.57{col 46}{space 3}0.116{col 54}{space 4}-.4039194{col 67}{space 3} .0445204
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0332846{col 26}{space 2} .1126093{col 37}{space 1}    0.30{col 46}{space 3}0.768{col 54}{space 4}-.1874255{col 67}{space 3} .2539947
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.2781866{col 26}{space 2} .1329204{col 37}{space 1}   -2.09{col 46}{space 3}0.036{col 54}{space 4}-.5387059{col 67}{space 3}-.0176673
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0119553{col 26}{space 2} .0963812{col 37}{space 1}    0.12{col 46}{space 3}0.901{col 54}{space 4}-.1769483{col 67}{space 3} .2008589
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.1079112{col 26}{space 2} .1012542{col 37}{space 1}   -1.07{col 46}{space 3}0.287{col 54}{space 4}-.3063657{col 67}{space 3} .0905433
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.4306649{col 26}{space 2} .1087537{col 37}{space 1}   -3.96{col 46}{space 3}0.000{col 54}{space 4}-.6438182{col 67}{space 3}-.2175117
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.0530912{col 26}{space 2} .1151652{col 37}{space 1}   -0.46{col 46}{space 3}0.645{col 54}{space 4}-.2788109{col 67}{space 3} .1726285
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2}-.0327085{col 26}{space 2} .1117662{col 37}{space 1}   -0.29{col 46}{space 3}0.770{col 54}{space 4}-.2517663{col 67}{space 3} .1863493
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0544634{col 26}{space 2} .0729527{col 37}{space 1}   -0.75{col 46}{space 3}0.455{col 54}{space 4} -.197448{col 67}{space 3} .0885213
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0488074{col 26}{space 2} .0732739{col 37}{space 1}   -0.67{col 46}{space 3}0.505{col 54}{space 4}-.1924215{col 67}{space 3} .0948067
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0713931{col 26}{space 2} .0771459{col 37}{space 1}    0.93{col 46}{space 3}0.355{col 54}{space 4}-.0798102{col 67}{space 3} .2225964
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .0803032{col 26}{space 2} .0722073{col 37}{space 1}    1.11{col 46}{space 3}0.266{col 54}{space 4}-.0612206{col 67}{space 3} .2218269
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2}-.0184403{col 26}{space 2} .0647852{col 37}{space 1}   -0.28{col 46}{space 3}0.776{col 54}{space 4}-.1454169{col 67}{space 3} .1085363
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}  .343373{col 26}{space 2} .0889336{col 37}{space 1}    3.86{col 46}{space 3}0.000{col 54}{space 4} .1690662{col 67}{space 3} .5176797
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1629167{col 26}{space 2} .0933935{col 37}{space 1}    1.74{col 46}{space 3}0.081{col 54}{space 4}-.0201312{col 67}{space 3} .3459646
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.0611332{col 26}{space 2} .0960128{col 37}{space 1}   -0.64{col 46}{space 3}0.524{col 54}{space 4}-.2493147{col 67}{space 3} .1270483
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.2061534{col 26}{space 2} .0958639{col 37}{space 1}   -2.15{col 46}{space 3}0.032{col 54}{space 4}-.3940432{col 67}{space 3}-.0182636
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0694996{col 26}{space 2} .0943633{col 37}{space 1}    0.74{col 46}{space 3}0.461{col 54}{space 4}-.1154491{col 67}{space 3} .2544483
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .3715214{col 26}{space 2} .1113835{col 37}{space 1}    3.34{col 46}{space 3}0.001{col 54}{space 4} .1532137{col 67}{space 3}  .589829
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1}  .9074341{col 30}{text}{c |}{result}{space 2} .907434{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.7831736{col 16}+  .2859461{it:i}{col 30}{text}{c |}{result}{space 2} .833742{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.7831736{col 16}-  .2859461{it:i}{col 30}{text}{c |}{result}{space 2} .833742{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.00297859{col 16}+   .807075{it:i}{col 30}{text}{c |}{result}{space 2} .807081{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.00297859{col 16}-   .807075{it:i}{col 30}{text}{c |}{result}{space 2} .807081{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .2950413{col 16}+  .7116823{it:i}{col 30}{text}{c |}{result}{space 2} .770416{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .2950413{col 16}-  .7116823{it:i}{col 30}{text}{c |}{result}{space 2} .770416{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.4803607{col 16}+  .5314495{it:i}{col 30}{text}{c |}{result}{space 2} .716369{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.4803607{col 16}-  .5314495{it:i}{col 30}{text}{c |}{result}{space 2} .716369{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .6616274{col 30}{text}{c |}{result}{space 2} .661627{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.5103609{col 16}+  .3883444{it:i}{col 30}{text}{c |}{result}{space 2} .641311{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.5103609{col 16}-  .3883444{it:i}{col 30}{text}{c |}{result}{space 2} .641311{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4069139{col 16}+   .423451{it:i}{col 30}{text}{c |}{result}{space 2} .587273{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4069139{col 16}-   .423451{it:i}{col 30}{text}{c |}{result}{space 2} .587273{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .3943819{col 30}{text}{c |}{result}{space 2} .394382{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2} 13.1585{col 23}   9{col 29}{space 3}0.15556{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2}  8.2054{col 23}   9{col 29}{space 3}0.51359{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2}  8.8081{col 23}   9{col 29}{space 3}0.45517{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2}  3.3767{col 23}   9{col 29}{space 3}0.94747{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. var dGE dRIR dPI if YQ < tq(2016q1), lags(1/6)
+{res}
+{txt}Vector autoregression
+
+{col 1}Sample: {res}1983q4 {txt}thru{res} 2015q4 {txt}{col 49}Number of obs{col 67}= {res}       129
+{txt}Log likelihood =  {res}-257.2687{txt}{col 38}{col 49}AIC{col 67}=  {res} 4.872383
+{txt}FPE{col 16}=  {res} .0263899{txt}{col 49}HQIC{col 67}=  {res} 5.385825
+{txt}Det(Sigma_ml){col 16}=  {res}  .010835{txt}{col 49}SBIC{col 67}=  {res} 6.136021
+
+{col 1}{text}Equation        {col 18}  Parms{col 26}     RMSE {col 37}   R-sq  {col 47}   chi2   {col 58} P>chi2
+{res}{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{col 1}{text}dGE             {col 18}{result}    19{col 26}{space 2} .435077{col 37}{space 1} 0.4164{col 47} 92.02667{col 58} 0.0000
+{col 1}{text}dRIR            {col 18}{result}    19{col 26}{space 2} .607451{col 37}{space 1} 0.3689{col 47} 75.39748{col 58} 0.0000
+{col 1}{text}dPI             {col 18}{result}    19{col 26}{space 2}  .50391{col 37}{space 1} 0.3882{col 47} 81.85102{col 58} 0.0000
+{col 1}{text}{hline 17}{hline 8}{hline 11}{hline 10}{hline 11}{hline 7}
+{res}
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      z{col 46}   P>|z|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dGE          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} -.359289{col 26}{space 2}   .08641{col 37}{space 1}   -4.16{col 46}{space 3}0.000{col 54}{space 4}-.5286496{col 67}{space 3}-.1899284
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}  .184754{col 26}{space 2}  .088516{col 37}{space 1}    2.09{col 46}{space 3}0.037{col 54}{space 4} .0112659{col 67}{space 3} .3582422
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2220809{col 26}{space 2}  .096116{col 37}{space 1}    2.31{col 46}{space 3}0.021{col 54}{space 4}  .033697{col 67}{space 3} .4104648
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .3391097{col 26}{space 2} .1003063{col 37}{space 1}    3.38{col 46}{space 3}0.001{col 54}{space 4}  .142513{col 67}{space 3} .5357064
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .3440262{col 26}{space 2} .1045054{col 37}{space 1}    3.29{col 46}{space 3}0.001{col 54}{space 4} .1391995{col 67}{space 3}  .548853
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2}-.0217544{col 26}{space 2} .0998719{col 37}{space 1}   -0.22{col 46}{space 3}0.828{col 54}{space 4}-.2174997{col 67}{space 3} .1739909
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0328982{col 26}{space 2} .0627543{col 37}{space 1}   -0.52{col 46}{space 3}0.600{col 54}{space 4}-.1558944{col 67}{space 3} .0900981
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0133454{col 26}{space 2} .0629464{col 37}{space 1}   -0.21{col 46}{space 3}0.832{col 54}{space 4}-.1367181{col 67}{space 3} .1100273
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.1086481{col 26}{space 2}  .067149{col 37}{space 1}   -1.62{col 46}{space 3}0.106{col 54}{space 4}-.2402577{col 67}{space 3} .0229615
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .0293991{col 26}{space 2} .0697218{col 37}{space 1}    0.42{col 46}{space 3}0.673{col 54}{space 4} -.107253{col 67}{space 3} .1660513
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0275166{col 26}{space 2} .0613978{col 37}{space 1}    0.45{col 46}{space 3}0.654{col 54}{space 4} -.092821{col 67}{space 3} .1478542
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2}   .12433{col 26}{space 2} .0555884{col 37}{space 1}    2.24{col 46}{space 3}0.025{col 54}{space 4} .0153788{col 67}{space 3} .2332812
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2323952{col 26}{space 2} .0755945{col 37}{space 1}   -3.07{col 46}{space 3}0.002{col 54}{space 4}-.3805578{col 67}{space 3}-.0842327
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1454216{col 26}{space 2} .0816337{col 37}{space 1}    1.78{col 46}{space 3}0.075{col 54}{space 4}-.0145774{col 67}{space 3} .3054206
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0237736{col 26}{space 2} .0843477{col 37}{space 1}    0.28{col 46}{space 3}0.778{col 54}{space 4}-.1415448{col 67}{space 3}  .189092
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}  .038238{col 26}{space 2} .0838212{col 37}{space 1}    0.46{col 46}{space 3}0.648{col 54}{space 4}-.1260486{col 67}{space 3} .2025245
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0538368{col 26}{space 2} .0833336{col 37}{space 1}    0.65{col 46}{space 3}0.518{col 54}{space 4} -.109494{col 67}{space 3} .2171675
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .0813246{col 26}{space 2} .0805802{col 37}{space 1}    1.01{col 46}{space 3}0.313{col 54}{space 4}-.0766097{col 67}{space 3} .2392589
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .1029324{col 26}{space 2} .0999638{col 37}{space 1}    1.03{col 46}{space 3}0.303{col 54}{space 4} -.092993{col 67}{space 3} .2988577
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dRIR         {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.1232595{col 26}{space 2} .1206449{col 37}{space 1}   -1.02{col 46}{space 3}0.307{col 54}{space 4}-.3597191{col 67}{space 3} .1132001
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .5278301{col 26}{space 2} .1235851{col 37}{space 1}    4.27{col 46}{space 3}0.000{col 54}{space 4} .2856077{col 67}{space 3} .7700526
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .2346131{col 26}{space 2} .1341962{col 37}{space 1}    1.75{col 46}{space 3}0.080{col 54}{space 4}-.0284067{col 67}{space 3} .4976328
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.3225132{col 26}{space 2} .1400467{col 37}{space 1}   -2.30{col 46}{space 3}0.021{col 54}{space 4}-.5969996{col 67}{space 3}-.0480268
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2}-.0393149{col 26}{space 2} .1459094{col 37}{space 1}   -0.27{col 46}{space 3}0.788{col 54}{space 4}-.3252921{col 67}{space 3} .2466622
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .0803145{col 26}{space 2} .1394402{col 37}{space 1}    0.58{col 46}{space 3}0.565{col 54}{space 4}-.1929832{col 67}{space 3} .3536122
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.2030123{col 26}{space 2}  .087617{col 37}{space 1}   -2.32{col 46}{space 3}0.021{col 54}{space 4}-.3747385{col 67}{space 3}-.0312861
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.2401618{col 26}{space 2} .0878851{col 37}{space 1}   -2.73{col 46}{space 3}0.006{col 54}{space 4}-.4124135{col 67}{space 3}-.0679101
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.1019701{col 26}{space 2} .0937528{col 37}{space 1}   -1.09{col 46}{space 3}0.277{col 54}{space 4}-.2857222{col 67}{space 3}  .081782
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.0514045{col 26}{space 2} .0973448{col 37}{space 1}   -0.53{col 46}{space 3}0.597{col 54}{space 4}-.2421968{col 67}{space 3} .1393879
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .1189827{col 26}{space 2} .0857231{col 37}{space 1}    1.39{col 46}{space 3}0.165{col 54}{space 4}-.0490314{col 67}{space 3} .2869969
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .0251832{col 26}{space 2} .0776119{col 37}{space 1}    0.32{col 46}{space 3}0.746{col 54}{space 4}-.1269335{col 67}{space 3} .1772998
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .0092982{col 26}{space 2} .1055444{col 37}{space 1}    0.09{col 46}{space 3}0.930{col 54}{space 4}-.1975649{col 67}{space 3} .2161613
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .3688934{col 26}{space 2} .1139761{col 37}{space 1}    3.24{col 46}{space 3}0.001{col 54}{space 4} .1455044{col 67}{space 3} .5922825
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .3245641{col 26}{space 2} .1177654{col 37}{space 1}    2.76{col 46}{space 3}0.006{col 54}{space 4} .0937481{col 67}{space 3} .5553801
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.2020755{col 26}{space 2} .1170303{col 37}{space 1}   -1.73{col 46}{space 3}0.084{col 54}{space 4}-.4314508{col 67}{space 3} .0272998
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2}-.0147898{col 26}{space 2} .1163495{col 37}{space 1}   -0.13{col 46}{space 3}0.899{col 54}{space 4}-.2428306{col 67}{space 3} .2132511
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .2005623{col 26}{space 2} .1125053{col 37}{space 1}    1.78{col 46}{space 3}0.075{col 54}{space 4}-.0199441{col 67}{space 3} .4210686
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2}-.3391295{col 26}{space 2} .1395684{col 37}{space 1}   -2.43{col 46}{space 3}0.015{col 54}{space 4}-.6126786{col 67}{space 3}-.0655804
+{txt}{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}dPI          {txt}{c |}
+{space 9}dGE {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0583289{col 26}{space 2} .1000807{col 37}{space 1}   -0.58{col 46}{space 3}0.560{col 54}{space 4}-.2544835{col 67}{space 3} .1378256
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.1706808{col 26}{space 2} .1025198{col 37}{space 1}   -1.66{col 46}{space 3}0.096{col 54}{space 4}-.3716159{col 67}{space 3} .0302544
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2}-.4567059{col 26}{space 2} .1113222{col 37}{space 1}   -4.10{col 46}{space 3}0.000{col 54}{space 4}-.6748934{col 67}{space 3}-.2385184
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.1146114{col 26}{space 2} .1161754{col 37}{space 1}   -0.99{col 46}{space 3}0.324{col 54}{space 4}-.3423111{col 67}{space 3} .1130882
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0553866{col 26}{space 2} .1210388{col 37}{space 1}    0.46{col 46}{space 3}0.647{col 54}{space 4}-.1818452{col 67}{space 3} .2926184
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .2725425{col 26}{space 2} .1156723{col 37}{space 1}    2.36{col 46}{space 3}0.018{col 54}{space 4}  .045829{col 67}{space 3} .4992561
+{txt}{space 12} {c |}
+{space 8}dRIR {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2}-.0537652{col 26}{space 2} .0726825{col 37}{space 1}   -0.74{col 46}{space 3}0.459{col 54}{space 4}-.1962203{col 67}{space 3} .0886899
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2}-.0187083{col 26}{space 2} .0729049{col 37}{space 1}   -0.26{col 46}{space 3}0.797{col 54}{space 4}-.1615994{col 67}{space 3} .1241828
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0469345{col 26}{space 2} .0777724{col 37}{space 1}    0.60{col 46}{space 3}0.546{col 54}{space 4}-.1054966{col 67}{space 3} .1993657
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2} .0816811{col 26}{space 2} .0807522{col 37}{space 1}    1.01{col 46}{space 3}0.312{col 54}{space 4}-.0765903{col 67}{space 3} .2399525
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0206425{col 26}{space 2} .0711114{col 37}{space 1}    0.29{col 46}{space 3}0.772{col 54}{space 4}-.1187333{col 67}{space 3} .1600183
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .0264804{col 26}{space 2} .0643828{col 37}{space 1}    0.41{col 46}{space 3}0.681{col 54}{space 4}-.0997076{col 67}{space 3} .1526684
+{txt}{space 12} {c |}
+{space 9}dPI {c |}
+{space 9}L1. {c |}{col 14}{res}{space 2} .3418553{col 26}{space 2} .0875541{col 37}{space 1}    3.90{col 46}{space 3}0.000{col 54}{space 4} .1702524{col 67}{space 3} .5134582
+{txt}{space 9}L2. {c |}{col 14}{res}{space 2} .1418766{col 26}{space 2} .0945487{col 37}{space 1}    1.50{col 46}{space 3}0.133{col 54}{space 4}-.0434354{col 67}{space 3} .3271885
+{txt}{space 9}L3. {c |}{col 14}{res}{space 2} .0073611{col 26}{space 2} .0976921{col 37}{space 1}    0.08{col 46}{space 3}0.940{col 54}{space 4}-.1841118{col 67}{space 3}  .198834
+{txt}{space 9}L4. {c |}{col 14}{res}{space 2}-.2231137{col 26}{space 2} .0970823{col 37}{space 1}   -2.30{col 46}{space 3}0.022{col 54}{space 4}-.4133915{col 67}{space 3}-.0328359
+{txt}{space 9}L5. {c |}{col 14}{res}{space 2} .0913344{col 26}{space 2} .0965175{col 37}{space 1}    0.95{col 46}{space 3}0.344{col 54}{space 4}-.0978364{col 67}{space 3} .2805052
+{txt}{space 9}L6. {c |}{col 14}{res}{space 2} .0097885{col 26}{space 2} .0933286{col 37}{space 1}    0.10{col 46}{space 3}0.916{col 54}{space 4}-.1731321{col 67}{space 3} .1927091
+{txt}{space 12} {c |}
+{space 7}_cons {c |}{col 14}{res}{space 2} .3097085{col 26}{space 2} .1157787{col 37}{space 1}    2.68{col 46}{space 3}0.007{col 54}{space 4} .0827864{col 67}{space 3} .5366306
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. varstable, graph saving(var_eigen.gph, replace) 
+{res}
+{txt}{col 4}Eigenvalue stability condition
+{col 3}{text}{c TLC}{hline 26}{c TT}{hline 13}{c TRC}
+{col 3}{text}{c |}        Eigenvalue       {col 30}{c |}   Modulus  {col 44}{c |}
+{res}{col 3}{text}{c LT}{hline 26}{c +}{hline 13}{c RT}
+{col 3}{text}{c |}{result}{space 1}   .884096{col 30}{text}{c |}{result}{space 2} .884096{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} .01513879{col 16}+  .8626955{it:i}{col 30}{text}{c |}{result}{space 2} .862828{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} .01513879{col 16}-  .8626955{it:i}{col 30}{text}{c |}{result}{space 2} .862828{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4193134{col 16}+   .734831{it:i}{col 30}{text}{c |}{result}{space 2}  .84605{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .4193134{col 16}-   .734831{it:i}{col 30}{text}{c |}{result}{space 2}  .84605{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.6113226{col 16}+  .5011531{it:i}{col 30}{text}{c |}{result}{space 2} .790487{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.6113226{col 16}-  .5011531{it:i}{col 30}{text}{c |}{result}{space 2} .790487{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  -.735338{col 16}+  .2826439{it:i}{col 30}{text}{c |}{result}{space 2} .787788{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  -.735338{col 16}-  .2826439{it:i}{col 30}{text}{c |}{result}{space 2} .787788{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.4973493{col 16}+  .5992291{it:i}{col 30}{text}{c |}{result}{space 2} .778737{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.4973493{col 16}-  .5992291{it:i}{col 30}{text}{c |}{result}{space 2} .778737{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .7443092{col 30}{text}{c |}{result}{space 2} .744309{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1} -.7276333{col 30}{text}{c |}{result}{space 2} .727633{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .5428022{col 16}+  .3596592{it:i}{col 30}{text}{c |}{result}{space 2} .651144{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .5428022{col 16}-  .3596592{it:i}{col 30}{text}{c |}{result}{space 2} .651144{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.00417165{col 16}+   .637788{it:i}{col 30}{text}{c |}{result}{space 2} .637802{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}-.00417165{col 16}-   .637788{it:i}{col 30}{text}{c |}{result}{space 2} .637802{col 44}{text}{c |}
+{res}{col 3}{text}{c |}{result}{space 1}  .6206365{col 30}{text}{c |}{result}{space 2} .620636{col 44}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 26}{c BT}{hline 13}{c BRC}
+{res}{txt}{col 4}All the eigenvalues lie inside the unit circle.
+{col 4}VAR satisfies stability condition.
+{res}{txt}file {bf:var_eigen.gph} saved
+
+{com}. varlmar, mlag(4)
+{res}
+{txt}{col 4}Lagrange-multiplier test
+{col 3}{text}{c TLC}{hline 6}{c TT}{hline 12}{hline 6}{hline 13}{c TRC}
+{col 3}{text}{c |} lag {col 10}{c |}      chi2 {col 23}  df {col 29} Prob > chi2{col 42}{c |}
+{res}{col 3}{text}{c LT}{hline 6}{c +}{hline 12}{hline 6}{hline 13}{c RT}
+{col 3}{text}{c |}   1{col 10}{c |}{result}{space 2}  2.9163{col 23}   9{col 29}{space 3}0.96752{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   2{col 10}{c |}{result}{space 2}  2.9961{col 23}   9{col 29}{space 3}0.96445{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   3{col 10}{c |}{result}{space 2}  8.0383{col 23}   9{col 29}{space 3}0.53029{col 42}{text}{c |}
+{res}{col 3}{text}{c |}   4{col 10}{c |}{result}{space 2}  2.7573{col 23}   9{col 29}{space 3}0.97314{col 42}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 6}{c BT}{hline 12}{hline 6}{hline 13}{c BRC}
+{col 4}H0: no autocorrelation at lag order
+{res}
+{com}. 
+. vargranger
+
+{txt}{col 4}Granger causality Wald tests
+{res}{col 3}{text}{c TLC}{hline 19}{hline 19}{c TT}{hline 9}{hline 6}{hline 12}{c TRC}
+{col 3}{text}{c |}          Equation{col 23}          Excluded{col 42}{c |}   chi2 {col 52}   df{col 58}Prob > chi2{col 70}{c |}
+{res}{col 3}{text}{c LT}{hline 19}{hline 19}{c +}{hline 9}{hline 6}{hline 12}{c RT}
+{col 3}{text}{c |}               dGE{col 23}              dRIR{col 42}{c |}{result}{space 1} 9.0957{col 52}    6{col 58}{space 2} 0.168{col 70}{text}{c |}
+{res}{col 3}{text}{c |}               dGE{col 23}               dPI{col 42}{c |}{result}{space 1} 14.162{col 52}    6{col 58}{space 2} 0.028{col 70}{text}{c |}
+{res}{col 3}{text}{c |}               dGE{col 23}               ALL{col 42}{c |}{result}{space 1} 23.387{col 52}   12{col 58}{space 2} 0.025{col 70}{text}{c |}
+{res}{col 3}{text}{c LT}{hline 19}{hline 19}{c +}{hline 9}{hline 6}{hline 12}{c RT}
+{col 3}{text}{c |}              dRIR{col 23}               dGE{col 42}{c |}{result}{space 1} 29.075{col 52}    6{col 58}{space 2} 0.000{col 70}{text}{c |}
+{res}{col 3}{text}{c |}              dRIR{col 23}               dPI{col 42}{c |}{result}{space 1} 30.042{col 52}    6{col 58}{space 2} 0.000{col 70}{text}{c |}
+{res}{col 3}{text}{c |}              dRIR{col 23}               ALL{col 42}{c |}{result}{space 1}  56.73{col 52}   12{col 58}{space 2} 0.000{col 70}{text}{c |}
+{res}{col 3}{text}{c LT}{hline 19}{hline 19}{c +}{hline 9}{hline 6}{hline 12}{c RT}
+{col 3}{text}{c |}               dPI{col 23}               dGE{col 42}{c |}{result}{space 1} 25.663{col 52}    6{col 58}{space 2} 0.000{col 70}{text}{c |}
+{res}{col 3}{text}{c |}               dPI{col 23}              dRIR{col 42}{c |}{result}{space 1} 2.3509{col 52}    6{col 58}{space 2} 0.885{col 70}{text}{c |}
+{res}{col 3}{text}{c |}               dPI{col 23}               ALL{col 42}{c |}{result}{space 1} 35.704{col 52}   12{col 58}{space 2} 0.000{col 70}{text}{c |}
+{res}{col 3}{text}{c BLC}{hline 19}{hline 19}{c BT}{hline 9}{hline 6}{hline 12}{c BRC}
+{res}
+{com}. 
+. quietly var dGE dRIR dPI if YQ < tq(2016q1), lags(1/6)
+
+. 
+. predict f_dPI
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable f_dPI " One-step ahead forecast"
+
+. tsline dPI f_dPI if YQ >= tq(2016q1), lpattern(solid dash) saving(dPI_1.gph, replace) ,title(" dPI . forecasts and actuals")
+{res}{txt}file {bf:dPI_1.gph} saved
+
+{com}. 
+. predict f_dRIR
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable f_dRIR " One-step ahead forecast"
+
+. tsline dRIR f_dRIR if YQ >= tq(2016q1), lpattern(solid dash) saving(dRIR_1.gph, replace) ,title(" dRIR . forecasts and actuals")
+{res}{txt}file {bf:dRIR_1.gph} saved
+
+{com}. 
+. predict f_dGE
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable f_dGE " One-step ahead forecast"
+
+. tsline dGE f_dGE if YQ >= tq(2016q1), lpattern(solid dash) saving(dGE_1.gph, replace) ,title(" dGE . forecasts and actuals")
+{res}{txt}file {bf:dGE_1.gph} saved
+
+{com}. 
+. predict r_dPI
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable r_dPI " Residuals "
+
+. tsline dPI r_dPI if YQ >= tq(2016q1), lpattern(solid dash) saving(dPI_1.gph, replace) ,title(" dPI . forecasts and actuals")
+{res}{txt}file {bf:dPI_1.gph} saved
+
+{com}. 
+. predict r_dRIR
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable r_dRIR " Residuals "
+
+. tsline dRIR r_dRIR if YQ >= tq(2016q1), lpattern(solid dash) saving(dRIR_1.gph, replace) ,title(" dRIR . forecasts and actuals")
+{res}{txt}file {bf:dRIR_1.gph} saved
+
+{com}. 
+. predict r_dGE
+{txt}(option {bf:xb} assumed; fitted values)
+(7 missing values generated)
+
+{com}. label variable r_dGE " Residuals "
+
+. tsline dGE r_dGE if YQ >= tq(2016q1), lpattern(solid dash) saving(dPI_1.gph, replace) ,title(" dGE . forecasts and actuals")
+{res}{txt}file {bf:dPI_1.gph} saved
+
+{com}. 
+. quietly var dGE dRIR dPI if YQ < tq(2016q1), lags(1/6)
+
+. fcast compute F_, step(12)  replace
+
+. 
+. label variable F_dGE " 12-step ahead forecast"
+
+. fcast graph F_dGE , observed lpattern(dash)  
+{res}
+{com}. 
+. label variable F_dRIR " 12-step ahead forecast"
+
+. fcast graph F_dRIR , observed lpattern(dash)  
+{res}
+{com}. 
+. label variable F_dPI " 12-step ahead forecast"
+
+. fcast graph F_dPI , observed lpattern(dash)  
+{res}
+{com}. 
+. capture erase macrovar.irf
+
+. quietly var dGE dRIR dPI if YQ < tq(2016q1), lags(1/6)
+
+. irf create iuf, set(macrovar) step(20) order(dGE dRIR dPI)
+{txt}(file {bf:macrovar.irf} created)
+(file {bf:macrovar.irf} now active)
+(file {bf:macrovar.irf} updated)
+
+{com}. 
+. irf table oirf, noci response(dPI) title(IRF of dPI)
+
+{txt}IRF of dPI
+
+{hline 9}{c TT}{hline 11}{hline 11}{hline 11}
+{col 10}{c |}{col 17}(1){col 22}{col 29}(2){col 34}{col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}oirf{col 22}{col 28}oirf{col 34}{col 40}oirf{col 46}
+{hline 9}{c +}{hline 11}{hline 11}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}-.035887{col 24}-.024382{col 36} .463296
+{txt} {col 2}      1{col 10}{c |}{res}{col 12}-.033352{col 24}-.038402{col 36}  .15838
+{txt} {col 2}      2{col 10}{c |}{res}{col 12}-.074195{col 24}-.020191{col 36} .125922
+{txt} {col 2}      3{col 10}{c |}{res}{col 12}-.212151{col 24} .024052{col 36} .073259
+{txt} {col 2}      4{col 10}{c |}{res}{col 12}-.090355{col 24}  .06331{col 36}-.028185
+{txt} {col 2}      5{col 10}{c |}{res}{col 12}-.074869{col 24} .034613{col 36} .005471
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .038276{col 24} .039479{col 36} .013191
+{txt} {col 2}      7{col 10}{c |}{res}{col 12}-.078214{col 24}-.014958{col 36}-.021194
+{txt} {col 2}      8{col 10}{c |}{res}{col 12}-.038396{col 24}-.015802{col 36} .021666
+{txt} {col 2}      9{col 10}{c |}{res}{col 12}-.031451{col 24}-.032516{col 36}-.024825
+{txt} {col 2}     10{col 10}{c |}{res}{col 12}-.032991{col 24}  .01582{col 36}-.023958
+{txt} {col 2}     11{col 10}{c |}{res}{col 12}-.025275{col 24} .009656{col 36}-.017447
+{txt} {col 2}     12{col 10}{c |}{res}{col 12}-.026883{col 24} .011006{col 36}-.013851
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} -.00109{col 24} -.01888{col 36} .000215
+{txt} {col 2}     14{col 10}{c |}{res}{col 12}-.012103{col 24}-.011905{col 36}-.009699
+{txt} {col 2}     15{col 10}{c |}{res}{col 12}-.027877{col 24} .000227{col 36}-.016366
+{txt} {col 2}     16{col 10}{c |}{res}{col 12}-.021368{col 24}-.000555{col 36}-.014522
+{txt} {col 2}     17{col 10}{c |}{res}{col 12}-.004708{col 24} .002611{col 36} -.01135
+{txt} {col 2}     18{col 10}{c |}{res}{col 12}-.002789{col 24}-.002542{col 36}-.007002
+{txt} {col 2}     19{col 10}{c |}{res}{col 12}-.009434{col 24}-.001757{col 36}-.006942
+{txt} {col 2}     20{col 10}{c |}{res}{col 12}-.011508{col 24}-.004341{col 36}-.006133
+{txt}{hline 9}{c BT}{hline 11}{hline 11}{hline 11}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dPI}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dPI}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dPI}.{p_end}
+
+{com}. irf table oirf, noci response(dRIR) title(IRF of dRIR)
+
+{txt}IRF of dRIR
+
+{hline 9}{c TT}{hline 11}{hline 11}{hline 11}
+{col 10}{c |}{col 17}(1){col 22}{col 29}(2){col 34}{col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}oirf{col 22}{col 28}oirf{col 34}{col 40}oirf{col 46}
+{hline 9}{c +}{hline 11}{hline 11}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}-.043726{col 24} .559228{col 36}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12}-.040978{col 24}-.113757{col 36} .004308
+{txt} {col 2}      2{col 10}{c |}{res}{col 12}  .23392{col 24}-.118993{col 36} .184776
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} -.05026{col 24}-.035303{col 36}  .10607
+{txt} {col 2}      4{col 10}{c |}{res}{col 12}-.169988{col 24} .011706{col 36}-.044535
+{txt} {col 2}      5{col 10}{c |}{res}{col 12}-.023624{col 24} .069693{col 36} .017216
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .020548{col 24} .032866{col 36} .049343
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .057004{col 24}-.007296{col 36} .017512
+{txt} {col 2}      8{col 10}{c |}{res}{col 12}-.046696{col 24} .011385{col 36} .045654
+{txt} {col 2}      9{col 10}{c |}{res}{col 12}-.050385{col 24}-.023413{col 36} .008508
+{txt} {col 2}     10{col 10}{c |}{res}{col 12} .001214{col 24}-.022358{col 36}-.010985
+{txt} {col 2}     11{col 10}{c |}{res}{col 12}-.005284{col 24}  .02956{col 36} .000685
+{txt} {col 2}     12{col 10}{c |}{res}{col 12}-.016092{col 24} .022414{col 36}-.015248
+{txt} {col 2}     13{col 10}{c |}{res}{col 12}-.008788{col 24} .003296{col 36} .007097
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .015637{col 24}-.018772{col 36} .017175
+{txt} {col 2}     15{col 10}{c |}{res}{col 12}-.004659{col 24}-.013291{col 36}-.006984
+{txt} {col 2}     16{col 10}{c |}{res}{col 12}-.021179{col 24} .007664{col 36}-.005842
+{txt} {col 2}     17{col 10}{c |}{res}{col 12}-.013369{col 24} .006271{col 36}-.007287
+{txt} {col 2}     18{col 10}{c |}{res}{col 12} .006828{col 24} .001667{col 36}-.002907
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .007655{col 24}-.001899{col 36} .003337
+{txt} {col 2}     20{col 10}{c |}{res}{col 12}-.007176{col 24}-.000594{col 36}-.001677
+{txt}{hline 9}{c BT}{hline 11}{hline 11}{hline 11}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dRIR}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dRIR}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dRIR}.{p_end}
+
+{com}. irf table oirf, noci response(dGE) title(IRF of dGE)
+
+{txt}IRF of dGE
+
+{hline 9}{c TT}{hline 11}{hline 11}{hline 11}
+{col 10}{c |}{col 17}(1){col 22}{col 29}(2){col 34}{col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}oirf{col 22}{col 28}oirf{col 34}{col 40}oirf{col 46}
+{hline 9}{c +}{hline 11}{hline 11}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12} .401761{col 24}       0{col 36}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12} -.13457{col 24}-.012731{col 36}-.107668
+{txt} {col 2}      2{col 10}{c |}{res}{col 12}  .12704{col 24} .006232{col 36} .069109
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .027859{col 24} -.06139{col 36}-.046076
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .157864{col 24} .041559{col 36} .021756
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .032839{col 24}-.018625{col 36}-.006196
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .012083{col 24} .059669{col 36} .023853
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .074087{col 24}-.061712{col 36} .036854
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .067433{col 24}  .01082{col 36}  .02137
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .017384{col 24} .010537{col 36} .013032
+{txt} {col 2}     10{col 10}{c |}{res}{col 12}-.000515{col 24} .016606{col 36} .013453
+{txt} {col 2}     11{col 10}{c |}{res}{col 12}  .04711{col 24} .003143{col 36} .025277
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .041076{col 24}-.007406{col 36} .023604
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .018259{col 24} .011495{col 36} .014122
+{txt} {col 2}     14{col 10}{c |}{res}{col 12}-.000583{col 24} .004502{col 36} .015994
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .019805{col 24}-.000249{col 36} .014773
+{txt} {col 2}     16{col 10}{c |}{res}{col 12} .027032{col 24} .000699{col 36} .013606
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .007897{col 24} .008873{col 36} .010654
+{txt} {col 2}     18{col 10}{c |}{res}{col 12} .005808{col 24}  .00473{col 36} .010267
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .010599{col 24} -.00137{col 36} .011984
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .015687{col 24}-.000602{col 36} .009898
+{txt}{hline 9}{c BT}{hline 11}{hline 11}{hline 11}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dGE}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dGE}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dGE}.{p_end}
+
+{com}. 
+. irf graph oirf, yline(0) response(dPI) impulse(dRIR)
+{res}
+{com}. irf graph oirf, yline(0) response(dRIR) impulse(dGE)
+{res}
+{com}. 
+. irf graph oirf, yline(0) response(dPI) impulse(dGE)
+{res}
+{com}. 
+. irf graph oirf, yline(0) response(dRIR) impulse(dGE)
+{res}
+{com}. irf graph oirf, yline(0) response(dRIR) impulse(dPI)
+{res}
+{com}. 
+. irf table fevd, response(dPI)  title(FEVD of dPI)
+
+{txt}FEVD of dPI
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(1){col 29}(1){col 41}(1){col 46}{col 53}(2){col 65}(2){col 77}(2){col 82}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}{col 52}fevd{col 63}Lower{col 75}Upper{col 82}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0{col 48}       0{col 60}       0{col 72}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12} .005948{col 24}-.020511{col 36} .032407{col 48} .002745{col 60}-.015235{col 72} .020726
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .009829{col 24}-.027751{col 36} .047409{col 48} .008473{col 60}-.026435{col 72} .043382
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .029722{col 24} -.03736{col 36} .096805{col 48} .009313{col 60}-.029655{col 72}  .04828
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .166961{col 24} .037744{col 36} .296178{col 48} .009641{col 60}-.021344{col 72} .040625
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .185146{col 24} .044642{col 36} .325651{col 48} .021412{col 60}-.025722{col 72} .068546
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .198036{col 24} .051911{col 36} .344161{col 48} .024536{col 60}-.030426{col 72} .079497
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .200483{col 24} .058048{col 36} .342918{col 48}  .02889{col 60}-.035125{col 72} .092905
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .214201{col 24} .066827{col 36} .361576{col 48} .028969{col 60}-.033148{col 72} .091086
+{txt} {col 2}      9{col 10}{c |}{res}{col 12}  .21708{col 24} .066794{col 36} .367366{col 48} .029503{col 60}-.032099{col 72} .091105
+{txt} {col 2}     10{col 10}{c |}{res}{col 12}  .21825{col 24} .066711{col 36} .369788{col 48} .032287{col 60}-.028237{col 72} .092811
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .220148{col 24} .067255{col 36} .373041{col 48}  .03282{col 60} -.02811{col 72}  .09375
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .221306{col 24} .067058{col 36} .375554{col 48} .032987{col 60}-.028435{col 72}  .09441
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .222694{col 24} .067498{col 36}  .37789{col 48} .033232{col 60}-.028468{col 72} .094932
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .222473{col 24} .067464{col 36} .377482{col 48}   .0342{col 60}-.027681{col 72} .096081
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .222646{col 24} .067453{col 36} .377839{col 48} .034561{col 60}-.027445{col 72} .096568
+{txt} {col 2}     16{col 10}{c |}{res}{col 12}  .22417{col 24} .068169{col 36}  .38017{col 48}  .03446{col 60}-.027344{col 72} .096265
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .225027{col 24} .068409{col 36} .381644{col 48} .034397{col 60}-.027273{col 72} .096067
+{txt} {col 2}     18{col 10}{c |}{res}{col 12}  .22499{col 24} .068399{col 36}  .38158{col 48} .034401{col 60}-.027336{col 72} .096138
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .224971{col 24} .068407{col 36} .381536{col 48} .034413{col 60}-.027296{col 72} .096122
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .225132{col 24} .068481{col 36} .381782{col 48} .034408{col 60}-.027299{col 72} .096115
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(3){col 29}(3){col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12} .991307{col 24} .959407{col 36} 1.02321
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .981698{col 24} .930952{col 36} 1.03244
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .960965{col 24} .885057{col 36} 1.03687
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .823398{col 24} .693287{col 36} .953509
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .793442{col 24} .648018{col 36} .938865
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .777428{col 24} .624084{col 36} .930773
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .770627{col 24} .618426{col 36} .922828
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .756829{col 24} .601397{col 36} .912262
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .753417{col 24} .595402{col 36} .911432
+{txt} {col 2}     10{col 10}{c |}{res}{col 12} .749463{col 24} .589815{col 36} .909112
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .747032{col 24} .585846{col 36} .908218
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .745707{col 24} .583317{col 36} .908096
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .744074{col 24} .580755{col 36} .907393
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .743326{col 24} .579805{col 36} .906848
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .742793{col 24} .578761{col 36} .906825
+{txt} {col 2}     16{col 10}{c |}{res}{col 12}  .74137{col 24} .576431{col 36} .906309
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .740576{col 24} .575048{col 36} .906105
+{txt} {col 2}     18{col 10}{c |}{res}{col 12}  .74061{col 24} .575106{col 36} .906114
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .740616{col 24} .575134{col 36} .906097
+{txt} {col 2}     20{col 10}{c |}{res}{col 12}  .74046{col 24} .574893{col 36} .906027
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{p 0 4 4}95%  lower and upper bounds reported.{p_end}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dPI}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dPI}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dPI}.{p_end}
+
+{com}. irf table fevd, response(dRIR)  title(FEVD of dRIR)
+
+{txt}FEVD of dRIR
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(1){col 29}(1){col 41}(1){col 46}{col 53}(2){col 65}(2){col 77}(2){col 82}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}{col 52}fevd{col 63}Lower{col 75}Upper{col 82}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0{col 48}       0{col 60}       0{col 72}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12} .006076{col 24}-.020663{col 36} .032816{col 48} .993924{col 60} .967184{col 72} 1.02066
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .010906{col 24}-.020397{col 36} .042209{col 48} .989038{col 60} .957584{col 72} 1.02049
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .134881{col 24} .025337{col 36} .244424{col 48}   .7861{col 60} .662012{col 72} .910188
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .135998{col 24}  .02654{col 36} .245456{col 48} .762485{col 60} .636244{col 72} .888727
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .187588{col 24} .059102{col 36} .316073{col 48} .713332{col 60} .576089{col 72} .850574
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .186527{col 24} .059973{col 36} .313081{col 48} .714949{col 60} .579656{col 72} .850242
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .185887{col 24} .058493{col 36} .313282{col 48} .711394{col 60} .575413{col 72} .847375
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .191133{col 24} .060733{col 36} .321532{col 48} .706279{col 60}   .5684{col 72} .844158
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .193835{col 24}  .06128{col 36} .326391{col 48} .700283{col 60} .560528{col 72} .840039
+{txt} {col 2}     10{col 10}{c |}{res}{col 12} .197694{col 24} .063556{col 36} .331833{col 48} .696949{col 60} .556194{col 72} .837704
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .197451{col 24} .063557{col 36} .331346{col 48} .697082{col 60} .556594{col 72}  .83757
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .197151{col 24} .063717{col 36} .330586{col 48} .697571{col 60} .557512{col 72}  .83763
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .197277{col 24} .063448{col 36} .331106{col 48} .697191{col 60} .556942{col 72} .837439
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .197376{col 24} .063585{col 36} .331167{col 48}  .69702{col 60} .556741{col 72} .837299
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .197513{col 24} .063423{col 36} .331602{col 48} .696484{col 60} .555662{col 72} .837307
+{txt} {col 2}     16{col 10}{c |}{res}{col 12} .197459{col 24} .063482{col 36} .331435{col 48} .696493{col 60} .555784{col 72} .837203
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .198137{col 24} .063239{col 36} .333035{col 48} .695861{col 60}  .55457{col 72} .837153
+{txt} {col 2}     18{col 10}{c |}{res}{col 12} .198385{col 24} .063261{col 36}  .33351{col 48} .695565{col 60} .554057{col 72} .837072
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .198455{col 24} .063108{col 36} .333802{col 48}  .69549{col 60} .553859{col 72} .837121
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .198543{col 24} .063082{col 36} .334004{col 48} .695396{col 60}  .55363{col 72} .837162
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(3){col 29}(3){col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .000056{col 24}-.002451{col 36} .002564
+{txt} {col 2}      3{col 10}{c |}{res}{col 12}  .07902{col 24} -.00161{col 36} .159649
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .101517{col 24} .015542{col 36} .187492
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .099081{col 24} .011899{col 36} .186263
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .098524{col 24} .012619{col 36}  .18443
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .102718{col 24} .013408{col 36} .192029
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .102588{col 24} .013005{col 36} .192171
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .105881{col 24} .014813{col 36}  .19695
+{txt} {col 2}     10{col 10}{c |}{res}{col 12} .105356{col 24} .014977{col 36} .195735
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .105467{col 24} .015312{col 36} .195621
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .105277{col 24} .015201{col 36} .195354
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .105532{col 24} .015215{col 36}  .19585
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .105604{col 24} .015254{col 36} .195953
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .106003{col 24} .015181{col 36} .196825
+{txt} {col 2}     16{col 10}{c |}{res}{col 12} .106048{col 24} .015353{col 36} .196743
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .106002{col 24} .015314{col 36} .196689
+{txt} {col 2}     18{col 10}{c |}{res}{col 12}  .10605{col 24} .015294{col 36} .196806
+{txt} {col 2}     19{col 10}{c |}{res}{col 12} .106055{col 24} .015301{col 36} .196808
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .106061{col 24} .015276{col 36} .196846
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{p 0 4 4}95%  lower and upper bounds reported.{p_end}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dRIR}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dRIR}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dRIR}.{p_end}
+
+{com}. irf table fevd, response(dGE)  title(FEVD of dGE)
+
+{txt}FEVD of dGE
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(1){col 29}(1){col 41}(1){col 46}{col 53}(2){col 65}(2){col 77}(2){col 82}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}{col 52}fevd{col 63}Lower{col 75}Upper{col 82}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0{col 48}       0{col 60}       0{col 72}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12}       1{col 24}       1{col 36}       1{col 48}       0{col 60}       0{col 72}       0
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .938547{col 24} .862697{col 36}  1.0144{col 48} .000847{col 60} -.00864{col 72} .010335
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .921928{col 24} .828881{col 36} 1.01497{col 48} .000947{col 60}    -.01{col 72} .011894
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .897391{col 24} .782804{col 36} 1.01198{col 48} .018135{col 60}-.031306{col 72} .067575
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .899758{col 24} .785356{col 36} 1.01416{col 48} .023156{col 60}-.037065{col 72} .083377
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .898794{col 24} .780079{col 36} 1.01751{col 48} .024421{col 60}-.041663{col 72} .090504
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .884111{col 24} .758593{col 36} 1.00963{col 48} .038148{col 60}-.040876{col 72} .117173
+{txt} {col 2}      8{col 10}{c |}{res}{col 12} .869128{col 24} .739847{col 36} .998408{col 48} .051112{col 60}-.037075{col 72} .139299
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .869488{col 24} .742836{col 36}  .99614{col 48} .050571{col 60}-.036801{col 72} .137944
+{txt} {col 2}     10{col 10}{c |}{res}{col 12} .868724{col 24} .742089{col 36} .995359{col 48} .050875{col 60}-.036091{col 72} .137841
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .867247{col 24} .740019{col 36} .994475{col 48} .051816{col 60}-.035362{col 72} .138993
+{txt} {col 2}     12{col 10}{c |}{res}{col 12}  .86626{col 24} .739216{col 36} .993303{col 48} .051304{col 60}-.034967{col 72} .137576
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .865147{col 24} .738176{col 36} .992119{col 48} .051074{col 60}-.034673{col 72} .136821
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .864266{col 24} .737369{col 36} .991163{col 48} .051432{col 60}-.034415{col 72} .137278
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .863397{col 24} .735887{col 36} .990907{col 48} .051454{col 60}-.034263{col 72}  .13717
+{txt} {col 2}     16{col 10}{c |}{res}{col 12} .862907{col 24} .734972{col 36} .990843{col 48}  .05134{col 60}-.034208{col 72} .136887
+{txt} {col 2}     17{col 10}{c |}{res}{col 12}  .86269{col 24} .734924{col 36} .990456{col 48} .051171{col 60}-.034082{col 72} .136425
+{txt} {col 2}     18{col 10}{c |}{res}{col 12} .862121{col 24} .734094{col 36} .990149{col 48} .051409{col 60}-.034026{col 72} .136844
+{txt} {col 2}     19{col 10}{c |}{res}{col 12}  .86174{col 24} .733464{col 36} .990016{col 48}  .05146{col 60}-.033963{col 72} .136883
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .861343{col 24} .732876{col 36} .989811{col 48} .051419{col 60}-.033942{col 72} .136779
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}{hline 11}{c -}{hline 11}{c -}{hline 11}
+
+{hline 9}{c TT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{col 10}{c |}{col 17}(3){col 29}(3){col 41}(3){col 46}
+{col 4} Step{col 10}{c |}{col 16}fevd{col 27}Lower{col 39}Upper{col 46}
+{hline 9}{c +}{hline 11}{c -}{hline 11}{c -}{hline 11}
+ {col 2}      0{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0
+{txt} {col 2}      1{col 10}{c |}{res}{col 12}       0{col 24}       0{col 36}       0
+{txt} {col 2}      2{col 10}{c |}{res}{col 12} .060605{col 24}-.015021{col 36} .136232
+{txt} {col 2}      3{col 10}{c |}{res}{col 12} .077125{col 24}-.015741{col 36} .169992
+{txt} {col 2}      4{col 10}{c |}{res}{col 12} .084475{col 24}-.020371{col 36} .189321
+{txt} {col 2}      5{col 10}{c |}{res}{col 12} .077086{col 24} -.01928{col 36} .173453
+{txt} {col 2}      6{col 10}{c |}{res}{col 12} .076785{col 24}-.020264{col 36} .173834
+{txt} {col 2}      7{col 10}{c |}{res}{col 12} .077741{col 24}-.020139{col 36} .175621
+{txt} {col 2}      8{col 10}{c |}{res}{col 12}  .07976{col 24}-.015463{col 36} .174983
+{txt} {col 2}      9{col 10}{c |}{res}{col 12} .079941{col 24}-.012064{col 36} .171946
+{txt} {col 2}     10{col 10}{c |}{res}{col 12}   .0804{col 24} -.01168{col 36} .172481
+{txt} {col 2}     11{col 10}{c |}{res}{col 12} .080937{col 24} -.01203{col 36} .173905
+{txt} {col 2}     12{col 10}{c |}{res}{col 12} .082436{col 24}-.010737{col 36} .175609
+{txt} {col 2}     13{col 10}{c |}{res}{col 12} .083779{col 24}-.009249{col 36} .176806
+{txt} {col 2}     14{col 10}{c |}{res}{col 12} .084302{col 24}-.008734{col 36} .177339
+{txt} {col 2}     15{col 10}{c |}{res}{col 12} .085149{col 24}-.008681{col 36} .178979
+{txt} {col 2}     16{col 10}{c |}{res}{col 12} .085753{col 24}-.008613{col 36} .180119
+{txt} {col 2}     17{col 10}{c |}{res}{col 12} .086139{col 24} -.00815{col 36} .180427
+{txt} {col 2}     18{col 10}{c |}{res}{col 12}  .08647{col 24}-.007978{col 36} .180918
+{txt} {col 2}     19{col 10}{c |}{res}{col 12}   .0868{col 24}-.007969{col 36} .181569
+{txt} {col 2}     20{col 10}{c |}{res}{col 12} .087238{col 24}-.007802{col 36} .182278
+{txt}{hline 9}{c BT}{hline 11}{c -}{hline 11}{c -}{hline 11}
+{p 0 4 4}95%  lower and upper bounds reported.{p_end}
+{p 0 4 4}(1) irfname = {res:iuf}, impulse = {res:dGE}, and response = {res:dGE}.{p_end}
+{p 0 4 4}(2) irfname = {res:iuf}, impulse = {res:dRIR}, and response = {res:dGE}.{p_end}
+{p 0 4 4}(3) irfname = {res:iuf}, impulse = {res:dPI}, and response = {res:dGE}.{p_end}
+
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/saarth2712/Downloads/EDA_COE_Final.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}20 Jan 2024, 18:50:38
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
